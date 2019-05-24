@@ -28,7 +28,7 @@ function start() {
         if (err) throw err;
         //console.log(results);
         for (var x = 0; x < results.length; x++) {
-            console.log(results[x].item_id + " | " + results[x].product_name + " | " + results[x].department_name + " | " + results[x].price + " | " + results[x].stock_quantity);
+            console.log(results[x].item_id + " | " + results[x].product_name + " | " + results[x].department_name + " | " + results[x].price + " | " + results[x].stock_quantity+" | "+ results[x].product_sales);
         }
         //connection.end();
         inquirer
@@ -80,6 +80,20 @@ function start() {
                         }
                     );
                     finalPrice=answer.units*chosenItem.price;
+                    var productSales;
+                    productSales=finalPrice+parseFloat(chosenItem.product_sales);
+                    console.log(productSales);
+                    connection.query(
+                        "UPDATE products SET ? WHERE ?",
+                        [
+                            {
+                                product_sales: productSales
+                            },
+                            {
+                                item_id: chosenItem.item_id
+                            }
+                        ]
+                    );
                     console.log("Total cost of purchase: $"+finalPrice);
                     connection.end();
                 }
