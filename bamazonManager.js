@@ -76,10 +76,6 @@ function viewLowInventory() {
         start();
     })
 }
-
-function addInventory() {
-
-}
 function addNewProduct() {
     inquirer
         .prompt([
@@ -133,4 +129,62 @@ function addNewProduct() {
             )
         });
 
+}
+
+function addInventory() {
+    connection.query("SELECT * FROM products", function (err, results) {
+        if (err) throw err;
+        var newInventory;
+        inquirer
+            .prompt([
+                {
+                    name: "choice",
+                    type: "rawlist",
+                    choices: function () {
+                        var choiceArray = [];
+                        for (var y = 0; y < results.length; y++) {
+                            choiceArray.push(results[y].product_name);
+                        }
+                        return choiceArray;
+                    },
+                    message: "On what product would you like to add inventory?"
+                },
+                {
+                    name: "addInventory",
+                    type: "input",
+                    message: "How much inventory would you like to add?",
+                    validate: function (value) {
+                        if (isNaN(value) === false) {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            ])
+            .then(function (answer) {
+                var chosenItem;
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].product_name === answer.choice) {
+                        chosenItem = results[i];
+                    }
+                }
+                newInventory = chosenItem.stock_quantity + parseInt(answer.addInventory);
+                connection.query("UPDATE products SET ? WHERE ?",
+                    [
+                        {
+                            stock_quantity: newInventory
+                        },
+                        {
+                            product_name: chosenItem.product_name
+                        }
+                    ],
+                    function (error) {
+                        if (error) throw err;
+                        console.log("Stock Updated successfully!");
+                        start();
+                    }
+                );
+            })
+    }
+    )
 }
