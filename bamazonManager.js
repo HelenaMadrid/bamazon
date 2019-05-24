@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var Table = require('cli-table3');
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -54,12 +55,19 @@ function start() {
 function viewProducts() {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
-        console.log("\n---------------------------------------------------\n");
-        //console.log(results);
+        var table = new Table({
+            head: ["ID", "Product", "Department", "Price", "Stock", "P.Sales"]
+            , colWidths: [5, 25, 20, 10, 10, 10]
+        });
+
+        // table is an Array, so you can `push`, `unshift`, `splice` and friends
         for (var x = 0; x < results.length; x++) {
-            console.log(results[x].item_id + " | " + results[x].product_name + " | " + results[x].department_name + " | " + results[x].price + " | " + results[x].stock_quantity + " | " + results[x].product_sales);
+
+            table.push(
+                [results[x].item_id, results[x].product_name, results[x].department_name, results[x].price, results[x].stock_quantity, results[x].product_sales]
+            );
         }
-        console.log("\n---------------------------------------------------\n");
+        console.log(table.toString());
         start();
     })
 }
@@ -67,12 +75,19 @@ function viewProducts() {
 function viewLowInventory() {
     connection.query("SELECT * FROM products WHERE stock_quantity < 5", function (err, results) {
         if (err) throw err;
-        console.log("\n---------------------------------------------------\n");
-        //console.log(results);
+        var table = new Table({
+            head: ["ID", "Product", "Department", "Price", "Stock", "P.Sales"]
+            , colWidths: [5, 25, 20, 10, 10, 10]
+        });
+
+        // table is an Array, so you can `push`, `unshift`, `splice` and friends
         for (var x = 0; x < results.length; x++) {
-            console.log(results[x].item_id + " | " + results[x].product_name + " | " + results[x].department_name + " | " + results[x].price + " | " + results[x].stock_quantity + " | " + results[x].product_sales);
+
+            table.push(
+                [results[x].item_id, results[x].product_name, results[x].department_name, results[x].price, results[x].stock_quantity, results[x].product_sales]
+            );
         }
-        console.log("\n---------------------------------------------------\n");
+        console.log(table.toString());
         start();
     })
 }
