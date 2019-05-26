@@ -25,6 +25,7 @@ When you run *node bamazonManager* the first thing that comes up is a menu that 
 https://drive.google.com/file/d/1FZyce_3Q1GcyXD10kDFm2aSPHm7sstUF/view?usp=sharing
 
 **bamazonManager**
+https://drive.google.com/file/d/1TLFbo6q2Dru4M9OC42pn56W-j6DPAvZi/view?usp=sharing
 
 
 ## Authors
