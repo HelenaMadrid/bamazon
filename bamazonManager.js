@@ -73,7 +73,7 @@ function viewProducts() {
 }
 
 function viewLowInventory() {
-    connection.query("SELECT * FROM products WHERE stock_quantity < 5", function (err, results) {
+    connection.query("SELECT item_id,product_name, department_name, price, stock_quantity, product_sales FROM products INNER JOIN departments ON products.department_id=departments.department_id WHERE stock_quantity < 5", function (err, results) {
         if (err) throw err;
         var table = new Table({
             head: ["ID", "Product", "Department", "Price", "Stock", "P.Sales"]

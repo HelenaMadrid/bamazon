@@ -30,15 +30,15 @@ function start() {
         //console.log(results);
 
         var table = new Table({
-            head: ["ID", "Product", "Department", "Price", "Stock", "P.Sales"]
-            , colWidths: [5, 25, 20, 10, 10, 10]
+            head: ["ID", "Product", "Department", "Price", "Stock"]
+            , colWidths: [5, 25, 20, 10, 10]
         });
 
         // table is an Array, so you can `push`, `unshift`, `splice` and friends
         for (var x = 0; x < results.length; x++) {
 
             table.push(
-                [results[x].item_id, results[x].product_name, results[x].department_name, results[x].price, results[x].stock_quantity, results[x].product_sales]
+                [results[x].item_id, results[x].product_name, results[x].department_name, results[x].price, results[x].stock_quantity]
             );
         }
         console.log(table.toString());
