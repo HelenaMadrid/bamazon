@@ -22,6 +22,7 @@ When you run *node bamazonManager* the first thing that comes up is a menu that 
 ## Working proof
 
 **bamazonCustomer**
+https://drive.google.com/file/d/1FZyce_3Q1GcyXD10kDFm2aSPHm7sstUF/view?usp=sharing
 
 **bamazonManager**
 
