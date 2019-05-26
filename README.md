@@ -4,13 +4,15 @@ Bamazon
 
 ## How does it works?
 
-Bamazon is a front-end 
+Bamazon is an Amazon-like store where you can buy products as a customer and view inventory of products and add new products and stock of those products as a Manager.
+Although this assignment was a three part challenge, I only managed to do two and a half due to time.
 
 ## How can I use it?
 
-You can use the following commands:
+When you run *node bamazonCustomer* all the products available at the story will print, from which the customer will choose one and input how many of it he wants. If the customer inputs a number greater that the existence of that product, there will be a message informing him that there is not enough stock and the transaction will terminate without changing the database, as if the purchase never came through.
 
 
+When you run *node bamazonManager* the first thing that comes up is a menu that asks what do you want to do. The options are: 1. view all inventory, 2. view low inventory, 3. add stock to a product, 4. add new product, and 5. exit. 
 
 ## Built With
 
@@ -19,16 +21,9 @@ You can use the following commands:
 
 ## Working proof
 
+**bamazonCustomer**
 
-**Log.txt**
-* All the results from the user searches are addded into a document called "log.txt". At first, the document doesn't exists but it's creater after the first result is delivered.
-
-![alt text](https://github.com/HelenaMadrid/liri-node-app/blob/master/images/without-log-txt.png "directory without log.txt")
-![alt text](https://github.com/HelenaMadrid/liri-node-app/blob/master/images/with-log-txt.png "directory with log.txt")
-
-* We can check the results of all the requests that the user has input.
-
-![alt text](https://github.com/HelenaMadrid/liri-node-app/blob/master/images/log-text.gif "log.txt content")
+**bamazonManager**
 
 
 ## Authors
