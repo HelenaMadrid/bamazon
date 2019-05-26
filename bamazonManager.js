@@ -45,7 +45,7 @@ function start() {
                 addInventory();
             }
             else if (answers.selectAction === "Add New Product") {
-                addNewProduct();
+                addNewProduct2();
             }
             else {
                 connection.end();
@@ -53,7 +53,7 @@ function start() {
         });
 }
 function viewProducts() {
-    connection.query("SELECT * FROM products", function (err, results) {
+    connection.query("SELECT item_id,product_name, department_name, price, stock_quantity, product_sales FROM products INNER JOIN departments ON products.department_id=departments.department_id", function (err, results) {
         if (err) throw err;
         var table = new Table({
             head: ["ID", "Product", "Department", "Price", "Stock", "P.Sales"]
@@ -202,4 +202,75 @@ function addInventory() {
             })
     }
     )
+}
+function addNewProduct2() {
+    connection.query("SELECT * FROM departments", function (err, results) {
+        if (err) throw err;
+        var departmentId;
+        inquirer
+            .prompt([
+                {
+                    name: "productName",
+                    type: "input",
+                    message: "What is the name of the product?"
+                },
+                {
+                    name: "departmentName",
+                    type: "rawlist",
+                    choices: function () {
+                        var choiceArray = [];
+                        for (var y = 0; y < results.length; y++) {
+                            choiceArray.push(results[y].department_name);
+                        }
+                        return choiceArray;
+                    },
+                    message: "What department does this product belong to?"
+                },
+                {
+                    name: "unitPrice",
+                    type: "input",
+                    message: "What is the unit price of the product?",
+                    validate: function (value) {
+                        if (isNaN(value) === false) {
+                            return true;
+                        }
+                        return false;
+                    }
+                },
+                {
+                    name: "stock",
+                    type: "input",
+                    message: "How much of this product do you have?",
+                    validate: function (value) {
+                        if (isNaN(value) === false) {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            ])
+            .then(function (answers) {
+                var choice;
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].department_name === answers.departmentName) {
+                        choice = results[i];
+                    }
+                }
+                console.log(choice.department_id);
+                connection.query("INSERT INTO products SET ?", {
+                    product_name: answers.productName,
+                    department_id: choice.department_id,
+                    price: answers.unitPrice,
+                    stock_quantity: answers.stock
+
+                },
+                    function (err) {
+                        if (err) throw err;
+                        console.log("Your product was created successfully!");
+                        // re-prompt the user for if they want to bid or post
+                        start();
+                    }
+                )
+            });
+    })
 }

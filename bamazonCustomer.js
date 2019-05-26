@@ -25,7 +25,7 @@ connection.connect(function (err) {
 });
 
 function start() {
-    connection.query("SELECT * FROM products", function (err, results) {
+    connection.query("SELECT item_id,product_name, department_name, price, stock_quantity, product_sales FROM products INNER JOIN departments ON products.department_id=departments.department_id", function (err, results) {
         if (err) throw err;
         //console.log(results);
 
